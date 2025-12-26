@@ -1,0 +1,74 @@
+Feature Scaling Techniques:
+
+Difference between Normalization and Standardization:
+Normalization typically refers to scaling data to a fixed range, usually [0, 1], 
+while standardization refers to scaling data to have a mean of 0 and a standard deviation of 1.
+
+Z-Score Normalization -
+(xi - mean) / std_dev
+Where:
+mean = Σ xi / N
+std_dev = sqrt( Σ (xi - mean)² / N )
+Used for: data with Gaussian distribution.
+Scikit-learn: StandardScaler
+
+Min-Max Scaler -
+(xi - min) / (max - min)
+Used for: data with a known minimum and maximum.
+Scikit-learn: MinMaxScaler
+
+MaxAbs Scaler -
+xi / max_abs
+Used for: data that is already centered at zero.
+Scikit-learn: MaxAbsScaler
+
+Mean Normalization -
+(xi - mean) / (max - min)
+Used for: data where centering around the mean is desired.
+Scikit-learn: None (custom implementation needed)
+
+Robust Scaler -
+(xi - median) / IQR
+IQR: Interquartile Range => Q3 - Q1
+Where:
+Q1 = 25th percentile
+Q3 = 75th percentile
+Used for: data with outliers.
+Scikit-learn: RobustScaler
+
+Unit Vector Scaler -
+xi / ||x||
+Where ||x|| is the Euclidean norm (L2 norm) of the vector x.
+||x|| = sqrt( Σ xi² )
+Used for: text data and high-dimensional data.
+Scikit-learn: Normalizer
+
+Log Transformation -
+log(xi + 1)  (to handle zero values)
+Used for: skewed data to reduce skewness.
+Scikit-learn: FunctionTransformer with np.log1p
+
+Box-Cox Transformation -
+(xi^λ - 1) / λ  (for λ ≠ 0)
+Used for: data that is strictly positive.
+Scikit-learn: PowerTransformer with method='box-cox'
+
+Yeo-Johnson Transformation -
+((xi + 1)^λ - 1) / λ  (for xi ≥ 0, λ ≠ 0)
+Used for: data that can be positive or negative.
+Scikit-learn: PowerTransformer with method='yeo-johnson'
+
+
+Feature Scaling Techniques Summary Table:
+| Technique                  | Formula                                  | Use Case                          | Scikit-learn Class/Function                |
+|----------------------------|------------------------------------------|-----------------------------------|--------------------------------------------|
+| Z-Score Normalization      | (xi - mean) / std_dev                    | Gaussian distributed data         | StandardScaler                             |
+| Min-Max Scaler             | (xi - min) / (max - min)                 | Known min and max data            | MinMaxScaler                               |
+| MaxAbs Scaler              | xi / max_abs                             | Centered at zero data             | MaxAbsScaler                               |
+| Mean Normalization         | (xi - mean) / (max - min)                | Centered around the mean          | None (custom implementation needed)        |
+| Robust Scaler              | (xi - median) / IQR                      | Data with outliers                | RobustScaler                               |
+| Unit Vector Scaler         | xi / ||x||                               | Text and high-dimensional data    | Normalizer                                 |
+| Log Transformation         | log(xi + 1)                              | Skewed data                       | FunctionTransformer with np.log1p          |
+| Box-Cox Transformation     | (xi^λ - 1) / λ                           | Strictly positive data            | PowerTransformer with method='box-cox'     |
+| Yeo-Johnson Transformation | ((xi + 1)^λ - 1) / λ                     | Positive or negative data         | PowerTransformer with method='yeo-johnson' |
+|----------------------------|------------------------------------------|-----------------------------------|--------------------------------------------|
